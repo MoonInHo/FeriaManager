@@ -4,10 +4,7 @@ import com.feria.feriamanager.member.application.service.SignMemberService;
 import com.feria.feriamanager.member.application.dto.CreateMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/members")
@@ -15,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberRestController {
 
     private final SignMemberService signMemberService;
+
+    @GetMapping("/main")
+    public ResponseEntity<String> mainPage() {
+        return ResponseEntity.ok("mainPage");
+    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(

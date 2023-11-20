@@ -3,10 +3,12 @@ package com.feria.feriamanager.member.application.service;
 import com.feria.feriamanager.exception.exception.member.DuplicateUsernameException;
 import com.feria.feriamanager.exception.exception.member.DuplicatePhoneException;
 import com.feria.feriamanager.member.application.dto.CreateMemberRequestDto;
+import com.feria.feriamanager.member.domain.entity.Member;
 import com.feria.feriamanager.member.domain.repository.MemberRepository;
 import com.feria.feriamanager.member.domain.vo.Phone;
 import com.feria.feriamanager.member.domain.vo.Username;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SignMemberService {
 
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     @Transactional
@@ -22,7 +25,10 @@ public class SignMemberService {
         checkDuplicateUsername(createMemberRequestDto);
         checkDuplicatePhone(createMemberRequestDto);
 
-        memberRepository.save(createMemberRequestDto.toEntity());
+        Member member = createMemberRequestDto.toEntity();
+        member.passwordEncrypt(passwordEncoder);
+
+        memberRepository.save(member);
     }
 
     @Transactional(readOnly = true)
