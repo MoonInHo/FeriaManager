@@ -9,5 +9,4 @@ class FeriaManagerApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
