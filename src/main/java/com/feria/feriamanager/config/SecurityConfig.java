@@ -53,6 +53,13 @@ public class SecurityConfig {
                         .failureUrl("/sign-in-fail")
                 )
         ;
+        http
+                .logout(logout -> logout
+                        .logoutUrl("/api/members/sign-out")
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/api/members/main")
+                )
+        ;
 
         return http.build();
     }
